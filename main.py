@@ -16,16 +16,16 @@ app = FastAPI()
 async def root():
     return {"greeting": "Hello, World!", "message": "Welcome to MohammedAPI!"}
 
-@app.post("/predict")
-async def predict_image(image: UploadFile):
-    contents = image.file.read() 
-    img = Image.open(io.BytesIO(contents))
+# @app.post("/predict")
+# async def predict_image(image: UploadFile):
+#     contents = image.file.read() 
+#     img = Image.open(io.BytesIO(contents))
 
-    if img.mode != "RGB":
-        img = img.convert("RGB")
+#     if img.mode != "RGB":
+#         img = img.convert("RGB")
     
-    if img is None:
-        return {"error": "Invalid image"}
+#     if img is None:
+#         return {"error": "Invalid image"}
 
-    pred, prob, description = predict(img)
-    return {"prediction": pred, "probability": prob, "description": description}
+#     pred, prob, description = predict(img)
+#     return {"prediction": pred, "probability": prob, "description": description}
