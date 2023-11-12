@@ -2,12 +2,13 @@ from fastai.vision.all import *
 from PIL import Image
 
 import pathlib
+print('1')
 plt = platform.system()
 if plt == 'Windows': pathlib.PosixPath = pathlib.WindowsPath
 if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
-print('hi')
+print('2')
 learn = load_learner('SaudiLandmarkClassifier.pkl') 
-
+print('3')
 # This is a simple dictionary. In a real application, you might use a database.
 landmark_descriptions = {
     "Al Masmak Palace": "The palace was constructed in the hijri 14th century during the reign of Imam Abdullah bin Faisal as his residence and the center of power and money. The palace is a strong fort against enemies with its solid high walls. It has only two entrances and small openings in the walls for gun barrels at the time of battles. Today, the palace stands as a symbol of the history of regaining power and rule of the country displaying in its corridors the features of that era and its leaders after it had been turned into a museum in 1995/1416",
@@ -24,13 +25,15 @@ landmark_descriptions = {
 }
 
 def predict(image: Image):
+    print('4')
     img = image.resize((224, 224))
     pred, pred_idx, probs = learn.predict(img)
-
+    print('5')
     confidence_threshold = 0.7
     probability = probs[pred_idx].item() 
-
+    print('6')
     if probability < confidence_threshold:
         return "The landmark is not recognized", probability, None
     else:
         return pred, probability, landmark_descriptions[pred]
+        
