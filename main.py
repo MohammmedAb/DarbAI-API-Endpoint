@@ -4,6 +4,7 @@ from model import predict
 from PIL import Image
 import io
 import platform
+from fastapi.middleware.cors import CORSMiddleware
 
 import pathlib
 plt = platform.system()
@@ -11,6 +12,19 @@ if plt == 'Windows': pathlib.PosixPath = pathlib.WindowsPath
 if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
 app = FastAPI()
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+
 
 @app.get("/")
 async def root():
