@@ -13,10 +13,15 @@ The model is accessible through a simple REST API built with FastAPI. It's hoste
 
 Our model is trained to identify the following Saudi landmarks:
 
+- Al Faisaliah Tower
 - Al Masmak Palace
+- Al Rahmah Mosque
+- Diriyah
 - Hegra
+- Ibrahim Palace
 - Ithra
 - Jabal AlFil (Elephant Rock)
+- King Abdullah Financial District (KAFD)
 - Kingdom Tower
 - Maraya
 - Nassif House Museum
