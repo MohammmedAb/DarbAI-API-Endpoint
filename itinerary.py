@@ -59,7 +59,7 @@ def query_weaviate(category, selections, totalNumberPerCategory, city):
     }
 
     query_result = weaviateClient.query\
-        .get(city, ["name","description", "slugCategoryPOI", "slugCity", "bannerImage"])\
+        .get(city, ["name","description", "slugCategoryPOI", "slugCity", "bannerImage","location"])\
         .with_where(where_filter)\
         .with_near_text({"concepts": selections})\
         .with_group_by(properties=["description"],groups= totalNumberPerCategory, objects_per_group= 1)\
