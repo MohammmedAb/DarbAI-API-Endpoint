@@ -79,26 +79,26 @@ def LLMDescription(LLMPlan):
         role="user",
         content=str(LLMPlan)
     )
-    # print(message)
+
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
         assistant_id=assistantId,
     )
-    # print(runCreate)
+
     
     while run.status != 'completed':
         run = client.beta.threads.runs.retrieve(
             thread_id=thread.id,
             run_id=run.id
         )
-        time.sleep(1)  # Wait for 1 second before checking again
+        time.sleep(1)  
         print("Waiting for completion...", run.status)
 
     
     response = client.beta.threads.messages.list(
         thread_id=thread.id,
     )
-    # print(response)
+    
     return response.data[0].content[0].text.value
 
 
