@@ -144,7 +144,7 @@ def itinerary(city, numOfDayes, tags):
                     "bannerImage": result["bannerImage"],
                     "slugCategoryPOI": result["slugCategoryPOI"],
                     "slugCity": result["slugCity"],
-                    "bannerImage": result["bannerImage"]
+                    "location": result["location"]
                 }
                 LLMItem = {
                     "name": result["name"],
