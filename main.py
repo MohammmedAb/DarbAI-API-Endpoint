@@ -6,6 +6,7 @@ from PIL import Image
 import io
 import platform
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Dict
 
 import pathlib
 plt = platform.system()
@@ -48,7 +49,7 @@ async def predict_image(image: UploadFile):
 
 
 @app.post("/itinerary")
-async def make_itinerary(city: str, days: int, tags: dict[str, list[str]]):
+async def make_itinerary(city: str, days: int, tags: Dict[str, list[str]]):
     itinerary_plan, LLMDes = itinerary(city, days, tags)
 
     return {"itinerary": itinerary_plan, "LLMDes": LLMDes}
