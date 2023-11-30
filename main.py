@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from model import predict
+from itinerary import itinerary
 from PIL import Image
 import io
 import platform
@@ -44,3 +45,10 @@ async def predict_image(image: UploadFile):
 
     pred, prob, description = predict(img)
     return {"prediction": pred, "probability": prob, "description": description}
+
+
+@app.post("/itinerary")
+async def make_itinerary(city: str, days: int, tags: dict[str, list[str]]):
+    itinerary_plan, LLMDes = itinerary(city, days, tags)
+
+    return {"itinerary": itinerary_plan, "LLMDes": LLMDes}
