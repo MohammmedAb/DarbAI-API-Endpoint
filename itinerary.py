@@ -143,11 +143,12 @@ def itinerary(city, numOfDayes, tags):
                     "description": result["description"],
                     "bannerImage": result["bannerImage"],
                     "slugCategoryPOI": result["slugCategoryPOI"],
-                    "slugCity": result["slugCity"]
+                    "slugCity": result["slugCity"],
+                    "bannerImage": result["bannerImage"]
                 }
                 LLMItem = {
                     "name": result["name"],
-                    "description": result["description"][0:180],
+                    "description": result["description"][0:150],
                     "slugCity": result["slugCity"],
                 }
                 TripPlan["Day " + str(day_key)].append(item)
