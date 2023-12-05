@@ -142,6 +142,8 @@ def itinerary(city, numOfDayes, tags):
         for i in range(int(numOfDayes)):
             for j in range(numEachDayByCategory):
                 # print(category, query_key)
+                if query_result["data"]["Get"][city] is None:
+                    break
                 if query_key >= len(query_result["data"]["Get"][city]):
                     break
                 result = query_result["data"]["Get"][city][query_key]
