@@ -2,6 +2,7 @@ import os,json
 import weaviate
 from dotenv import load_dotenv
 from openai import OpenAI
+import random
 
 load_dotenv()
 
@@ -151,8 +152,11 @@ def itinerary(city, numOfDayes, tags):
                     "description": result["description"][0:150],
                     "slugCity": result["slugCity"],
                 }
-                TripPlan["Day " + str(day_key)].append(item)
-                LLMPlan["Day " + str(day_key)].append(LLMItem)
+                random_index = random.randint(0, len(TripPlan["Day " + str(day_key)]))
+                TripPlan["Day " + str(day_key)].insert(random_index, item)
+                LLMPlan["Day " + str(day_key)].insert(random_index, LLMItem)
+                # TripPlan["Day " + str(day_key)].append(item)
+                # LLMPlan["Day " + str(day_key)].append(LLMItem)
                 query_key += 1
             day_key += 1
 
