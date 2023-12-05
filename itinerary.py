@@ -3,6 +3,7 @@ import weaviate
 from dotenv import load_dotenv
 from openai import OpenAI
 import random
+import time
 
 load_dotenv()
 
@@ -70,8 +71,7 @@ def query_weaviate(category, selections, totalNumberPerCategory, city):
     return query_result
 
 def LLMDescription(LLMPlan):
-    assistantId= 'asst_iXLologv6SWugGCWHrOvZ6Iq'
-    import time  
+    assistantId= 'asst_iXLologv6SWugGCWHrOvZ6Iq'  
 
     thread = client.beta.threads.create()
     # print(thread)
@@ -86,14 +86,20 @@ def LLMDescription(LLMPlan):
         assistant_id=assistantId,
     )
 
-    
-    while run.status != 'completed':
+    start_time = time.time()
+    timeout = 60
+
+    while run.status == 'in_progress' or run.status == 'queued':
         run = client.beta.threads.runs.retrieve(
             thread_id=thread.id,
             run_id=run.id
         )
-        time.sleep(1)  
+        time.sleep(1) 
         print("Waiting for completion...", run.status)
+        elapsed_time = time.time() - start_time
+        if elapsed_time > timeout:
+            print("Operation timed out.")
+            return ""
 
     
     response = client.beta.threads.messages.list(
@@ -158,9 +164,27 @@ def itinerary(city, numOfDayes, tags):
                 # TripPlan["Day " + str(day_key)].append(item)
                 # LLMPlan["Day " + str(day_key)].append(LLMItem)
                 query_key += 1
+            # if TripPlan["Day " + str(day_key)] == []:
+            #     del TripPlan["Day " + str(day_key)]
+            #     del LLMPlan["Day " + str(day_key)]
+            #     continue
             day_key += 1
 
-            
+    if TripPlan["Day " + "1"] == []:
+        emptyCase = {
+            "Attractions": ["Family & Kids", "Amusement Parks", "Cultural & Historical", "Iconic Landmarks", "Parks", "Nature & wildlife"],
+            "Restaurants": [],
+            "Shopping": []
+        }
+        return itinerary(city, numOfDayes, emptyCase)
+    
+    for day in range(int(numOfDayes)):
+            day_key = "Day " + str(day+1)
+            if TripPlan[day_key] == []:
+                del TripPlan[day_key]
+                del LLMPlan[day_key]
+
+
     LLMDes = LLMDescription(LLMPlan)
 
 
