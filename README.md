@@ -57,6 +57,6 @@ Our model is trained to identify the following Saudi landmarks:
 - Clone locally and install packages with pip using `pip install -r requirements.txt`
 - Run locally using `hypercorn main:app --reload`
 - you can now access the API at `http://localhost:8000/docs`
-- you can acces the landmark recognition feature at `http://localhost:8000/landmark`
+- you can acces the landmark recognition feature at `http://localhost:8000/predict`
 - but you can't access the trip planner feature locally because it requires a database connection which is not available locally
 
