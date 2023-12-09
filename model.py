@@ -77,6 +77,19 @@ landmark_descriptions = {
 }
 
 def predict(image: Image):
+    """
+    Predicts the landmark in the given image.
+
+    Args:
+        image (PIL.Image.Image): The input image.
+
+    Returns:
+        Tuple[str, float, str] or Tuple[None, float, None, None]: 
+            If the predicted landmark has a probability greater than or equal to the confidence threshold, 
+            it returns a tuple containing the predicted landmark name, the probability, and a message indicating success.
+            If the predicted landmark has a probability lower than the confidence threshold, it returns a tuple 
+            containing None values to indicate failure.
+    """
     img = image.resize((224, 224))
     pred, pred_idx, probs = learn.predict(img)
     confidence_threshold = 0.7

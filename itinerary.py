@@ -108,6 +108,25 @@ def LLMDescription(LLMPlan):
     
     return response.data[0].content[0].text.value
 
+def LLMCompletions(LLMPlan):
+    completion = client.chat.completions.create(
+        model="gpt-4-1106-preview",
+        messages=[
+            {"role": "system", "content": "Be an energetic tour guide, summarizing a captivating Saudi Itinerary in a single paragraph. Use vivid language and emojis to showcase the Saudi Arabia's cultural and natural wonders, without lengthy details or day-by-day breakdowns just describe the overall experience in couple of sentences. This should spark excitement and curiosity in the reader to discover more."},
+            {"role": "user", "content": str(LLMPlan)}
+        ]
+    )
+    
+    try:
+        response = completion.choices[0].message.content
+    except IndexError:
+        response = ""
+    except AttributeError:
+        response = ""
+    
+    return response
+
+
 
 def itinerary(city, numOfDayes, tags):
     
@@ -187,7 +206,11 @@ def itinerary(city, numOfDayes, tags):
                 del LLMPlan[day_key]
 
 
-    LLMDes = LLMDescription(LLMPlan)
+    start_time = time.time()
+    # LLMDes = LLMDescription(LLMPlan)
+    LLMDes = LLMCompletions(LLMPlan)
+    end_time = time.time()
+    print("Time taken to generate LLM Description: ", end_time - start_time)
 
 
     return TripPlan, LLMDes
